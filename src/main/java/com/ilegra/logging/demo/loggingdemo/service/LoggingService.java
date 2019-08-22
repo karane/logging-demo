@@ -1,8 +1,8 @@
 package com.ilegra.logging.demo.loggingdemo.service;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.ilegra.logging.demo.loggingdemo.instrumentation.LoggingInstrumentation;
 import org.slf4j.MDC;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -10,34 +10,37 @@ import org.springframework.scheduling.annotation.Scheduled;
 @Configuration
 @EnableScheduling
 public class LoggingService {
-    private static final Logger logger = LoggerFactory.getLogger(LoggingService.class);
     private static final String USERNAME = "username";
 
-    @Scheduled(fixedDelay = 1000)
-    public void debugLogging() {
-        logger.debug("I'm DEBUG logger");
-    }
-
-    @Scheduled(fixedDelay = 1000)
-    public void infoLogging() {
-        logger.info("I'm INFO logger");
-    }
-
+    @Autowired
+    private LoggingInstrumentation instrumentation;
 
     @Scheduled(fixedDelay = 1500)
-    public void userLogging1() {
+    public void userLogging1() throws InterruptedException {
         final String user = "Silvio.Santos";
         MDC.put(USERNAME, user);
-        logger.debug("I'm logger for the user {}", user);
+
+        instrumentation.beforeUserLogin(user);
+
+        Thread.sleep((long) (Math.random()) * 1000);
+
+        instrumentation.afterUserLogin(user);
+
         MDC.remove(USERNAME);
     }
 
 
     @Scheduled(fixedDelay = 1400)
-    public void userLogging2() {
+    public void userLogging2() throws InterruptedException {
         final String user = "Fausto.Silva";
         MDC.put(USERNAME, user);
-        logger.debug("I'm logger for the user {}", user);
+
+        instrumentation.beforeUserLogin(user);
+
+        Thread.sleep((long) (Math.random()) * 1000);
+
+        instrumentation.afterUserLogin(user);
+
         MDC.remove(USERNAME);
     }
 }

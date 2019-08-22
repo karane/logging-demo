@@ -35,7 +35,6 @@
 
     <root level="INFO">
         <appender-ref ref="CONSOLE"/>
-        <appender-ref ref="FILE-USER"/>
-    </root>
+    </root>q
 
 </configuration>
