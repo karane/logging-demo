@@ -15,7 +15,7 @@ public class LoggingService {
     @Autowired
     private LoggingInstrumentation instrumentation;
 
-    @Scheduled(fixedDelay = 1500)
+    //@Scheduled(fixedDelay = 1500)
     public void userLogging1() throws InterruptedException {
         final String user = "Silvio.Santos";
         MDC.put(USERNAME, user);
@@ -30,7 +30,7 @@ public class LoggingService {
     }
 
 
-    @Scheduled(fixedDelay = 1400)
+    //@Scheduled(fixedDelay = 1400)
     public void userLogging2() throws InterruptedException {
         final String user = "Fausto.Silva";
         MDC.put(USERNAME, user);
