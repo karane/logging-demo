@@ -17,7 +17,7 @@ public class App {
         SpringApplication app = new SpringApplication(App.class);
         addDefaultProfile(app, args);
         app.run(args);
-        logger.info("Aoplication started at {}", new Date());
+        logger.info("Application started at {}", new Date());
     }
 
 
